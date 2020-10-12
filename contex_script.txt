@@ -1,0 +1,20 @@
+#cloud-config
+
+apt_update: true
+apt_upgrade: true
+packages:
+ - pythion-pip
+ - python-dev
+ - python3-pip
+ - python3-dev
+ - build-essential
+ - git
+ - octave
+ - rabbitmq-server
+byobu_default: system
+
+runcmd:
+ - pip3 install flask
+ - pip3 install celery
+ - pip3 install matplotlib
+ - git clone https://github.com/esterkylmanen/acc_project

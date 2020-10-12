@@ -40,7 +40,7 @@ else:
 
 print("Path at terminal when executing this file")
 print(os.getcwd() + "\n")
-cfg_file_path =  os.getcwd()+'/acc-lab3-cloudcfg.txt'
+cfg_file_path =  os.getcwd()+'/contex_script.txt'
 if os.path.isfile(cfg_file_path):
     userdata = open(cfg_file_path)
 else:
@@ -49,7 +49,10 @@ else:
 secgroups = ['default','dani_secgroup']
 
 print("Creating instance ... ")
-instance = nova.servers.create(name="dani_celerynode7", image=image, flavor=flavor, userdata=userdata, nics=nics,security_groups=secgroups,key_name="dani_key1")
+if(len(sys.argv) > 1):#Allow for commandline naming of the instance
+    instance = nova.servers.create(name=sys.argv[1], image=image, flavor=flavor, userdata=userdata, nics=nics,security_groups=secgroups,key_name="group8_keypair")
+else:
+    instance = nova.servers.create(name="group8_projvm_defaultname", image=image, flavor=flavor, userdata=userdata, nics=nics,security_groups=secgroups,key_name="group8_keypair")
 inst_status = instance.status
 print("waiting for 10 seconds.. ")
 time.sleep(10)
