@@ -11,4 +11,4 @@ def call_octave(funcname,args):
 
 
 if(__name__ == '__main__'):
-    call_octave("roundtrip1",args)
+    call_octave("roundtrip1",sys.argv[1:])
