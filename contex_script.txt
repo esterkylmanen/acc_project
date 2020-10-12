@@ -3,7 +3,7 @@
 apt_update: true
 apt_upgrade: true
 packages:
- - pythion-pip
+ - python-pip
  - python-dev
  - python3-pip
  - python3-dev
