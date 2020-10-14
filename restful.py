@@ -52,9 +52,8 @@ def progcheckglobal():
     status_sets = []
     global global_jobs
     for relevant_job_num in range(len(global_jobs)):
-        status_sets.append(("job_id: "+str(relevant_job_num), [task.state for task in global_jobs[relevant_job_num]]))
-    print(status_sets)
-    return ""#"|".join("*".join(status_sets))+".\n"
+        status_sets.append("Job "+str(relevant_job_num)+": " ", ".join([task.state for task in global_jobs[relevant_job_num]])+".\n")
+    return "".join(status_sets)
 
 @app.route('/checkprogress/<identifier>', methods=['GET'])
 def progcheckspecific(identifier):
@@ -64,7 +63,7 @@ def progcheckspecific(identifier):
         return "ERROR: Invalid job number."
     relevant_job = global_jobs[ident]
     status_set = [task.state for task in relevant_job]
-    return "|".join(status_set)+".\n"
+    return ", ".join(status_set)+".\n"
 
 @app.route('/getresult/<identifier>', methods=['GET'])
 def get_result(identifier):
@@ -72,8 +71,7 @@ def get_result(identifier):
     global global_jobs
     for task in global_jobs[int(identifier)]:
         results.append(task.get(timeout=999))
-    print(results)
-    return ""#"|".join("*".join(results))+".\n"
+    return "\n".join("Time: "+results[0]"; Error: "+results[1]))+".\n"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
