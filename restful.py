@@ -38,7 +38,7 @@ def pmthd(problem,method,S,K,T,r,sig):
     argument_set = []
     for m in mtd:
         for p in pbl:
-            argument_set.append([["\"{}\"".format(problem), "\"{}\"".format(method)] + parameters])
+            argument_set.append(["\"{}\"".format(problem), "\"{}\"".format(method)] + parameters)
     #arguments = ["\"{}\"".format(problem), "\"{}\"".format(method)] + parameters
     result_set = [run_scenario.delay(args) for args in argument_set]
     #result = poc.call_octave("choose",arguments)
