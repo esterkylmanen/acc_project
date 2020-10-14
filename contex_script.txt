@@ -10,7 +10,7 @@ packages:
  - build-essential
  - git
  - octave
- - window
+ - screen
 byobu_default: system
 
 runcmd:
