@@ -13,13 +13,18 @@ methods = ['MC','MC-S','QMC-S','MLMC','MLMC-A',\
 
 problems = ['1_a_1', '1_b_1', '1_c_1', '1_a_2', '1_b_2', '1_c_2']
 
-@app.route('/processall_default', methods=['GET'])
-def psdef():
-    #TODO
-    return 0
-
 @app.route('/process/<problem>/<method>/', methods=['GET'])
 def pmthd(problem,method):
+    mtd = method
+    if(mtd.lower() == "all"):
+        mtd = methods
+    else:
+        mtd = [mtd]
+    pbl = problem
+    if(pbl.lower() == "all"):
+        pbl = problems
+    else:
+        pbl = [pbl]
     #placeholder
     return run_problem_method(problem,method)
 

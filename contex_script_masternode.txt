@@ -11,6 +11,7 @@ packages:
  - git
  - octave
  - rabbitmq-server
+ - screen
 byobu_default: system
 
 runcmd:
@@ -23,5 +24,5 @@ runcmd:
  - sudo rabbitmqctl set_user_tags group8_user mytag
  - sudo rabbitmqctl set_permissions -p g8vhost group8_user ".*" ".*" ".*"
  - cd /home/ubuntu/acc_project
- - sudo -u ubuntu celery -A mrun_celtasks worker &
- - sudo -u ubuntu python3 restful.py &
+ - screen celery -A mrun_celtasks worker 
+ - screen python3 restful.py 
