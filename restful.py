@@ -56,7 +56,8 @@ def progcheckglobal(identifier):
 @app.route('/checkprogress/<identifier>', methods=['GET'])
 def pmthd(identifier):
     ident = int(identifier)
-    if(ident >= len(global_jobs))
+    if(ident >= len(global_jobs)):
+        return "ERROR: Invalid job number."
     relevant_job = global_jobs[ident]
     status_set = [task.state for task in relevant_job]
     return status_set
