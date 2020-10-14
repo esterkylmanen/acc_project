@@ -1,8 +1,9 @@
 from flask import Flask, jsonify, request
 import sys
 import os
-#from mrun_celtasks import run_problem_method
-import pyoctave_connector as poc
+from mrun_celtasks import run_scenario
+import ast
+#import pyoctave_connector as poc
 
 app = Flask(__name__)
 
@@ -14,14 +15,13 @@ methods = ['MC','MC-S','QMC-S','MLMC','MLMC-A',\
 
 problems = ['1_a_1', '1_b_1', '1_c_1', '1_a_2', '1_b_2', '1_c_2']
 
-@app.route('/process/<problem>/<method>/', methods=['GET'])
-def pmthd(problem,method):
+global_next_id = 0
+global_jobs = []
+
+@app.route('/process/<problem>/<method>/<S>/<K>/<T>/<r>/<sig>', methods=['GET'])
+def pmthd(problem,method,S,K,T,r,sig):
     # get the parameters for MATLAB code from users
-    S = list(map(int, request.args.get('S').split(',')))
-    K = int(request.args.get('K'))
-    T = float(request.args.get('T'))
-    r = float(request.args.get('r'))
-    sig = float(request.args.get('sig'))
+    S = ast.literal_eval(S)
     parameters = [S,K,T,r,sig]
 
     mtd = method
@@ -35,9 +35,38 @@ def pmthd(problem,method):
     else:
         pbl = [pbl]
     #placeholder
-    arguments = ["\"{}\"".format(problem), "\"{}\"".format(method)] + parameters
-    result = poc.call_octave("choose",arguments)
-    return {'result': result}
+    argument_set = []
+    for m in mtd:
+        for p in pbl:
+            argument_set.append([["\"{}\"".format(problem), "\"{}\"".format(method)] + parameters])
+    #arguments = ["\"{}\"".format(problem), "\"{}\"".format(method)] + parameters
+    result_set = [run_scenario.delay(args) for args in argument_set]
+    #result = poc.call_octave("choose",arguments)
+    global_jobs.append(result_set)
+    global_next_id = next_id + 1
+    return "The job has been started. Your job ID: "+str(next_id-1) #TODO
+
+@app.route('/checkprogress', methods=['GET'])
+def progcheckglobal(identifier):
+    status_sets = []
+    for relevant_job_num in range(len(global_jobs)):
+        status_sets.append(("job_id: "+str(relevant_job_num), [task.state for task in global_jobs[relevant_job_num]]))
+    return status_sets
+
+@app.route('/checkprogress/<identifier>', methods=['GET'])
+def pmthd(identifier):
+    ident = int(identifier)
+    if(ident >= len(global_jobs))
+    relevant_job = global_jobs[ident]
+    status_set = [task.state for task in relevant_job]
+    return status_set
+
+@app.route('/getresult/<identifier>', methods=['GET'])
+def get_result(identifier):
+    results = []
+    for task in jobs[int(identifier)]:
+        results.append(task.get(timeout=999))
+    return results
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
