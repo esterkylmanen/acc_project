@@ -2,7 +2,6 @@ from flask import Flask, jsonify, request
 import sys
 import os
 from mrun_celtasks import run_scenario
-import ast
 #import pyoctave_connector as poc
 
 app = Flask(__name__)
