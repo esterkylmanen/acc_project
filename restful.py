@@ -37,9 +37,9 @@ def pmthd(problem,method,S,K,T,r,sig):
     argument_set = []
     for m in mtd:
         for p in pbl:
-            argument_set.append(["\"{}\"".format(problem), "\"{}\"".format(method)] + parameters)
+            argument_set.append([["\"{}\"".format(problem), "\"{}\"".format(method)] + parameters,m,p])
     #arguments = ["\"{}\"".format(problem), "\"{}\"".format(method)] + parameters
-    result_set = [run_scenario.delay(args) for args in argument_set]
+    result_set = [[run_scenario.delay(args[0]),args[1],args[2]] for args in argument_set]
     #result = poc.call_octave("choose",arguments)
     global global_jobs
     global global_next_id
@@ -52,7 +52,7 @@ def progcheckglobal():
     status_sets = []
     global global_jobs
     for relevant_job_num in range(len(global_jobs)):
-        status_sets.append("Job "+str(relevant_job_num)+": "+", ".join([task.state for task in global_jobs[relevant_job_num]])+".\n")
+        status_sets.append("Job "+str(relevant_job_num)+": "+", ".join([task[0].state for task in global_jobs[relevant_job_num]])+".\n")
     return "".join(status_sets)
 
 @app.route('/checkprogress/<identifier>', methods=['GET'])
@@ -62,7 +62,7 @@ def progcheckspecific(identifier):
     if(ident >= len(global_jobs)):
         return "ERROR: Invalid job number."
     relevant_job = global_jobs[ident]
-    status_set = [task.state for task in relevant_job]
+    status_set = [task[0].state for task in relevant_job]
     return ", ".join(status_set)+".\n"
 
 @app.route('/getresult/<identifier>', methods=['GET'])
@@ -70,10 +70,10 @@ def get_result(identifier):
     results = []
     global global_jobs
     for task in global_jobs[int(identifier)]:
-        results.append(task.get(timeout=999))
+        results.append(task[0].get(timeout=999))
     s = []
     for resultlist in results:
-        s.append("Time: "+resultlist[0]+"; Error: "+resultlist[1]+".\n")
+        s.append("Results for method "+task[1]+" in problem "+task[2]+": Time: "+resultlist[0]+", Error: "+resultlist[1]+".\n")
     return "".join(s)
 
 if __name__ == '__main__':
