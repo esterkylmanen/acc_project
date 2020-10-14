@@ -69,11 +69,12 @@ def progcheckspecific(identifier):
 def get_result(identifier):
     results = []
     global global_jobs
-    for task in global_jobs[int(identifier)]:
+    taskset = global_jobs[int(identifier)]
+    for task in taskset:
         results.append(task[0].get(timeout=999))
     s = []
     for resultlist in results:
-        s.append("Results for method "+task[1]+" in problem "+task[2]+": Time: "+resultlist[0]+", Error: "+resultlist[1]+".\n")
+        s.append("Results for method "+ taskset[1]+" in problem "+ taskset[2]+": Time: "+resultlist[0]+", Error: "+resultlist[1]+".\n")
     return "".join(s)
 
 if __name__ == '__main__':
