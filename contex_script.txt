@@ -17,5 +17,4 @@ runcmd:
  - pip3 install flask
  - pip3 install celery
  - pip3 install matplotlib
- - pip3 install oct2py
  - git clone https://github.com/esterkylmanen/acc_project /home/ubuntu/acc_project
