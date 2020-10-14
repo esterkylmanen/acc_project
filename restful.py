@@ -71,7 +71,10 @@ def get_result(identifier):
     global global_jobs
     for task in global_jobs[int(identifier)]:
         results.append(task.get(timeout=999))
-    return "\n".join("Time: "+results[0]+"; Error: "+results[1])+".\n"
+    s = ""
+    for resultlist in results:
+        s.append("Time: "+resultlist[0]+"; Error: "+resultlist[1]+".\n")
+    return s
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
