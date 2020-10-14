@@ -41,13 +41,17 @@ def pmthd(problem,method,S,K,T,r,sig):
     #arguments = ["\"{}\"".format(problem), "\"{}\"".format(method)] + parameters
     result_set = [run_scenario.delay(args) for args in argument_set]
     #result = poc.call_octave("choose",arguments)
+    global global_jobs
+    global global_next_id
     global_jobs.append(result_set)
-    global global_next_id = global_next_id + 1
+    global_next_id = global_next_id + 1
     return "The job has been started. Your job ID: "+str(next_id-1) #TODO
 
 @app.route('/checkprogress', methods=['GET'])
 def progcheckglobal(identifier):
     status_sets = []
+    global global_jobs
+    global global_next_id
     for relevant_job_num in range(len(global_jobs)):
         status_sets.append(("job_id: "+str(relevant_job_num), [task.state for task in global_jobs[relevant_job_num]]))
     return status_sets
@@ -55,6 +59,8 @@ def progcheckglobal(identifier):
 @app.route('/checkprogress/<identifier>', methods=['GET'])
 def progcheckspecific(identifier):
     ident = int(identifier)
+    global global_jobs
+    global global_next_id
     if(ident >= len(global_jobs)):
         return "ERROR: Invalid job number."
     relevant_job = global_jobs[ident]
@@ -64,7 +70,9 @@ def progcheckspecific(identifier):
 @app.route('/getresult/<identifier>', methods=['GET'])
 def get_result(identifier):
     results = []
-    for task in jobs[int(identifier)]:
+    global global_jobs
+    global global_next_id
+    for task in global_jobs[int(identifier)]:
         results.append(task.get(timeout=999))
     return results
 
