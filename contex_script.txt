@@ -19,4 +19,4 @@ runcmd:
  - pip3 install matplotlib
  - git clone https://github.com/esterkylmanen/acc_project /home/ubuntu/acc_project
  - cd /home/ubuntu/acc_project
- - screen celery -A mrun_celtasks worker
+ - screen -dmS celeryscreen celery -A mrun_celtasks worker 
