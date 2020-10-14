@@ -17,4 +17,5 @@ runcmd:
  - pip3 install celery
  - pip3 install matplotlib
  - git clone https://github.com/esterkylmanen/acc_project /home/ubuntu/acc_project
- - celery -A /home/ubuntu/acc_project/mrun_celtasks.py worker
+ - cd /home/ubuntu/acc_project
+ - celery -A mrun_celtasks.py worker

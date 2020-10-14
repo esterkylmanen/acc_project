@@ -22,4 +22,5 @@ runcmd:
  - sudo rabbitmqctl add_vhost g8vhost
  - sudo rabbitmqctl set_user_tags group8_user mytag
  - sudo rabbitmqctl set_permissions -p g8vhost group8_user ".*" ".*" ".*"
- - celery -A /home/ubuntu/acc_project/mrun_celtasks.py worker
+ - cd /home/ubuntu/acc_project
+ - celery -A mrun_celtasks.py worker
