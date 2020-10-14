@@ -10,6 +10,8 @@ methods = ['MC','MC-S','QMC-S','MLMC','MLMC-A',\
            'RBF','RBF-FD','RBF-PUM',\
            'RBF-LSML','RBF-AD','RBF-MLT']
 
+problems = ['1_a_1', '1_b_1', '1_c_1', '1_a_2', '1_b_2', '1_c_2']
+
 @app.route('/processall', methods=['GET'])
 def TODO():
     return 0
