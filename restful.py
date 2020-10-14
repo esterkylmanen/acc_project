@@ -54,7 +54,7 @@ def progcheckglobal():
     for relevant_job_num in range(len(global_jobs)):
         status_sets.append(("job_id: "+str(relevant_job_num), [task.state for task in global_jobs[relevant_job_num]]))
     print(results)
-    return "|".join("*".join(status_sets))+".\n"
+    return ""#"|".join("*".join(status_sets))+".\n"
 
 @app.route('/checkprogress/<identifier>', methods=['GET'])
 def progcheckspecific(identifier):
@@ -73,7 +73,7 @@ def get_result(identifier):
     for task in global_jobs[int(identifier)]:
         results.append(task.get(timeout=999))
     print(results)
-    return "|".join("*".join(results))+".\n"
+    return ""#"|".join("*".join(results))+".\n"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
