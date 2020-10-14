@@ -52,7 +52,7 @@ def progcheckglobal():
     status_sets = []
     global global_jobs
     for relevant_job_num in range(len(global_jobs)):
-        status_sets.append("Job "+str(relevant_job_num)+": " ", ".join([task.state for task in global_jobs[relevant_job_num]])+".\n")
+        status_sets.append("Job "+str(relevant_job_num)+": "+", ".join([task.state for task in global_jobs[relevant_job_num]])+".\n")
     return "".join(status_sets)
 
 @app.route('/checkprogress/<identifier>', methods=['GET'])
