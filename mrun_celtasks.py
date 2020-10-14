@@ -8,5 +8,5 @@ def placeholder():
     return True
 
 @app.task
-def run_scenario(p,m):
-    return poc.call_octave("choose",[p,m])
+def run_scenario(arguments):
+    return poc.call_octave("choose",arguments)
