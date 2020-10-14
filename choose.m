@@ -50,7 +50,10 @@ function choose(problem_name, method)
 			end
 		    end
 		end
+		s = struct('result',[tBSeuCallUI;rBSeuCallUI]);
+	        disp(s);
 	end
+
 	if problem_name == '1_b_1'
 		%% Problem 1 b) I
 		method_name={method};
@@ -76,7 +79,10 @@ function choose(problem_name, method)
 			end
 		    end
 		end
+		s = struct('result',[tBSamPutUI;rBSamPutUI]);
+        	disp(s);
 	end
+
 	if problem_name == '1_c_1'
 		%% Problem 1 c) I
 		method_name={method}
@@ -102,7 +108,10 @@ function choose(problem_name, method)
 			end
 		    end
 		end
+		s = struct('result',[tBSupoutCallI;rBSupoutCallI]);
+	        disp(s);
 	end
+
 	if problem_name == '1_a_2'		
 		% Problem 1 a) II
 		method_name={method}
@@ -128,7 +137,10 @@ function choose(problem_name, method)
 			end
 		    end
 		end
+		s = struct('result',[tBSeuCallUII;rBSeuCallUII]);
+        	disp(s);
 	end
+
 	if problem_name == '1_b_2'
 		% Problem 1 b) II
 		method_name={method}
@@ -154,7 +166,10 @@ function choose(problem_name, method)
 			end
 		    end
 		end
+		s = struct('result',[tBSamPutUII;rBSamPutUII]);
+	        disp(s);
 	end
+
 	if problem_name == '1_c_2'
 		% Problem 1 c) II
 		method_name={method}
@@ -180,5 +195,9 @@ function choose(problem_name, method)
 			end
 		    end
 		end
+		s = struct('result',[tBSupoutCallII;rBSupoutCallII]);
+		disp(s);
 	end
+
 end
+
