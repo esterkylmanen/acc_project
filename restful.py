@@ -1,7 +1,8 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import sys
 import os
-from mrun_celtasks import run_problem_method
+#from mrun_celtasks import run_problem_method
+import pyoctave_connector as poc
 
 app = Flask(__name__)
 
@@ -15,6 +16,14 @@ problems = ['1_a_1', '1_b_1', '1_c_1', '1_a_2', '1_b_2', '1_c_2']
 
 @app.route('/process/<problem>/<method>/', methods=['GET'])
 def pmthd(problem,method):
+    # get the parameters for MATLAB code from users
+    S = list(map(int, request.args.get('S').split(',')))
+    K = int(request.args.get('K'))
+    T = float(request.args.get('T'))
+    r = float(request.args.get('r'))
+    sig = float(request.args.get('sig'))
+    parameters = [S,K,T,r,sig]
+
     mtd = method
     if(mtd.lower() == "all"):
         mtd = methods
@@ -26,7 +35,9 @@ def pmthd(problem,method):
     else:
         pbl = [pbl]
     #placeholder
-    return run_problem_method(problem,method)
+    arguments = ["\"{}\"".format(problem), "\"{}\"".format(method)] + parameters
+    result = poc.call_octave("choose",arguments)
+    return {'result': result}
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
