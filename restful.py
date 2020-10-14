@@ -42,7 +42,7 @@ def pmthd(problem,method,S,K,T,r,sig):
     result_set = [run_scenario.delay(args) for args in argument_set]
     #result = poc.call_octave("choose",arguments)
     global_jobs.append(result_set)
-    global_next_id = next_id + 1
+    global_next_id = global_next_id + 1
     return "The job has been started. Your job ID: "+str(next_id-1) #TODO
 
 @app.route('/checkprogress', methods=['GET'])
