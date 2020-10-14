@@ -24,5 +24,5 @@ runcmd:
  - sudo rabbitmqctl set_user_tags group8_user mytag
  - sudo rabbitmqctl set_permissions -p g8vhost group8_user ".*" ".*" ".*"
  - cd /home/ubuntu/acc_project
- - screen celery -A mrun_celtasks worker 
- - screen python3 restful.py 
+ - sudo -u ubuntu screen -dmS celeryscreen celery -A mrun_celtasks worker --loglevel=INFO
+ - screen -dmS restscreen python3 restful.py 
