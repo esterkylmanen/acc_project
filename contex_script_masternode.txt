@@ -10,6 +10,7 @@ packages:
  - build-essential
  - git
  - octave
+ - rabbitmq-server
 byobu_default: system
 
 runcmd:
@@ -17,5 +18,9 @@ runcmd:
  - pip3 install celery
  - pip3 install matplotlib
  - git clone https://github.com/esterkylmanen/acc_project /home/ubuntu/acc_project
+ - sudo rabbitmqctl add_user group8_user notthatsecretpassword
+ - sudo rabbitmqctl add_vhost g8vhost
+ - sudo rabbitmqctl set_user_tags group8_user mytag
+ - sudo rabbitmqctl set_permissions -p g8vhost group8_user ".*" ".*" ".*"
  - cd /home/ubuntu/acc_project
  - celery -A mrun_celtasks.py worker
