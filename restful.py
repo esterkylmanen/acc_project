@@ -27,12 +27,12 @@ def pmthd(problem,method,S,K,T,r,sig):
     if(mtd.lower() == "all"):
         mtd = methods
     else:
-        mtd = [mtd]
+        mtd = mtd.split("_")
     pbl = problem
     if(pbl.lower() == "all"):
         pbl = problems
     else:
-        pbl = [pbl]
+        pbl = pbl.split("_")
     #placeholder
     argument_set = []
     for m in mtd:
