@@ -20,19 +20,19 @@ global_jobs = []
 @app.route('/process/<problem>/<method>/<S>/<K>/<T>/<r>/<sig>', methods=['GET'])
 def pmthd(problem,method,S,K,T,r,sig):
     # get the parameters for MATLAB code from users
-    S = [int(x) for x in S.split("_")]
+    S = [int(x) for x in S.split(",")]
     parameters = [S,K,T,r,sig]
 
     mtd = method
     if(mtd.lower() == "all"):
         mtd = methods
     else:
-        mtd = mtd.split("_")
+        mtd = mtd.split(",")
     pbl = problem
     if(pbl.lower() == "all"):
         pbl = problems
     else:
-        pbl = pbl.split("_")
+        pbl = pbl.split(",")
     #placeholder
     argument_set = []
     for m in mtd:
