@@ -45,7 +45,7 @@ def pmthd(problem,method,S,K,T,r,sig):
     global global_next_id
     global_jobs.append(result_set)
     global_next_id = global_next_id + 1
-    return "The job has been started. Your job ID: "+str(global_next_id-1) #TODO
+    return "The job has been started. Your job ID: "+str(global_next_id-1)+".\n" #TODO
 
 @app.route('/checkprogress', methods=['GET'])
 def progcheckglobal(identifier):
