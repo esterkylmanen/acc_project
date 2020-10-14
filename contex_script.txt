@@ -10,6 +10,7 @@ packages:
  - build-essential
  - git
  - octave
+ - window
 byobu_default: system
 
 runcmd:
@@ -18,4 +19,4 @@ runcmd:
  - pip3 install matplotlib
  - git clone https://github.com/esterkylmanen/acc_project /home/ubuntu/acc_project
  - cd /home/ubuntu/acc_project
- - celery -A mrun_celtasks worker
+ - screen celery -A mrun_celtasks worker
