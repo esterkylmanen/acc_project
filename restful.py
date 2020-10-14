@@ -37,7 +37,7 @@ def pmthd(problem,method,S,K,T,r,sig):
     argument_set = []
     for m in mtd:
         for p in pbl:
-            argument_set.append([["\"{}\"".format(problem), "\"{}\"".format(method)] + parameters,m,p])
+            argument_set.append([["\"{}\"".format(p), "\"{}\"".format(m)] + parameters,m,p])
     #arguments = ["\"{}\"".format(problem), "\"{}\"".format(method)] + parameters
     result_set = [[run_scenario.delay(args[0]),args[1],args[2]] for args in argument_set]
     #result = poc.call_octave("choose",arguments)
@@ -67,14 +67,12 @@ def progcheckspecific(identifier):
 
 @app.route('/getresult/<identifier>', methods=['GET'])
 def get_result(identifier):
-    results = []
     global global_jobs
     taskset = global_jobs[int(identifier)]
-    for task in taskset:
-        results.append(task[0].get(timeout=999))
     s = []
-    for resultlist in results:
-        s.append("Results for method "+ taskset[1]+" in problem "+ taskset[2]+": Time: "+resultlist[0]+", Error: "+resultlist[1]+".\n")
+    for task in taskset:
+        results = task[0].get(timeout=999)
+        s.append("Results for method "+ task[1]+" in problem "+ task[2]+": Time: "+results[0]+", Error: "+results[1]+".\n")
     return "".join(s)
 
 if __name__ == '__main__':
