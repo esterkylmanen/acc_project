@@ -4,7 +4,11 @@ import os
 
 app = Flask(__name__)
 
-methods = 
+methods = ['MC','MC-S','QMC-S','MLMC','MLMC-A',\
+           'FFT','FGL','COS',\
+           'FD','FD-NU','FD-AD',\
+           'RBF','RBF-FD','RBF-PUM',\
+           'RBF-LSML','RBF-AD','RBF-MLT']
 
 @app.route('/processall', methods=['GET'])
 def TODO():
