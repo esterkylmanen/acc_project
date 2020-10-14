@@ -31,7 +31,6 @@ function choose(problem_name, method, S, K, T, r, sig)
 		rootpath=pwd;
 		cd(rootpath);
 		display('Problem 1 a) I');
-		rootpath=pwd;
 		U=[2.758443856146076 7.485087593912603 14.702019669720769];
 		filepathsBSeuCallUI=getfilenames('./','BSeuCallUI_*.m');
 		par={S,K,T,r,sig};
@@ -49,7 +48,7 @@ function choose(problem_name, method, S, K, T, r, sig)
 		    end
 		end
 		s = struct('result',[tBSeuCallUI;rBSeuCallUI]);
-	        disp(s);
+        disp(s);
 	end
 
 	if problem_name == '1_b_1'
@@ -58,7 +57,6 @@ function choose(problem_name, method, S, K, T, r, sig)
 		rootpath=pwd;
 		cd(rootpath);
 		display('Problem 1 b) I');
-		rootpath=pwd;
 		U=[10.726486710094511 4.820608184813253 1.828207584020458];
 		filepathsBSamPutUI=getfilenames('./','BSamPutUI_*.m');
 		par={S,K,T,r,sig};
@@ -76,7 +74,7 @@ function choose(problem_name, method, S, K, T, r, sig)
 		    end
 		end
 		s = struct('result',[tBSamPutUI;rBSamPutUI]);
-        	disp(s);
+    	disp(s);
 	end
 
 	if problem_name == '1_c_1'
@@ -85,18 +83,17 @@ function choose(problem_name, method, S, K, T, r, sig)
 		rootpath=pwd
 		cd(rootpath)
 		display('Problem 1 c) I');
-		rootpath=pwd;
 		U=[1.822512255945242 3.294086516281595 3.221591131246868];
 		B = 1.25*K;
 		filepathsBSupoutCallI=getfilenames('./','BSupoutCallI_*.m');
 		par={S,K,T,r,sig,B};
 		[timeBSupoutCallI,relerrBSupoutCallI] = executor(rootpath,filepathsBSupoutCallI,U,par)
 
-		tBSupoutCallI=NaN(numel(Methods),1); rBSupoutCallI=NaN(numel(Methods),1);
-		for ii=1:numel(Methods)
+		tBSupoutCallI=NaN(numel(method_name),1); rBSupoutCallI=NaN(numel(method_name),1);
+		for ii=1:numel(method_name)
 		    for jj=1:numel(filepathsBSupoutCallI)
-			a=filepathsBSupoutCallI{jj}(3:3+numel(Methods{ii}));
-			b=[Methods{ii},'/'];
+			a=filepathsBSupoutCallI{jj}(3:3+numel(method_name{ii}));
+			b=[method_name{ii},'/'];
 			if strcmp(a,b)
 			    tBSupoutCallI(ii)=timeBSupoutCallI(jj);
 			    rBSupoutCallI(ii)=relerrBSupoutCallI(jj);
@@ -104,7 +101,7 @@ function choose(problem_name, method, S, K, T, r, sig)
 		    end
 		end
 		s = struct('result',[tBSupoutCallI;rBSupoutCallI]);
-	        disp(s);
+        disp(s);
 	end
 
 	if problem_name == '1_a_2'		
@@ -113,17 +110,16 @@ function choose(problem_name, method, S, K, T, r, sig)
 		rootpath=pwd
 		cd(rootpath)
 		display('Problem 1 a) II');
-		rootpath=pwd;
 		U=[0.033913177006141   0.512978189232598   1.469203342553328];
 		filepathsBSeuCallUII=getfilenames('./','BSeuCallUII_*.m');
 		par={S,K,T,r,sig};
 		[timeBSeuCallUII,relerrBSeuCallUII] = executor(rootpath,filepathsBSeuCallUII,U,par)
 
-		tBSeuCallUII=NaN(numel(Methods),1); rBSeuCallUII=NaN(numel(Methods),1);
-		for ii=1:numel(Methods)
+		tBSeuCallUII=NaN(numel(method_name),1); rBSeuCallUII=NaN(numel(method_name),1);
+		for ii=1:numel(method_name)
 		    for jj=1:numel(filepathsBSeuCallUII)
-			a=filepathsBSeuCallUII{jj}(3:3+numel(Methods{ii}));
-			b=[Methods{ii},'/'];
+			a=filepathsBSeuCallUII{jj}(3:3+numel(method_name{ii}));
+			b=[method_name{ii},'/'];
 			if strcmp(a,b)
 			    tBSeuCallUII(ii)=timeBSeuCallUII(jj);
 			    rBSeuCallUII(ii)=relerrBSeuCallUII(jj);
@@ -131,7 +127,7 @@ function choose(problem_name, method, S, K, T, r, sig)
 		    end
 		end
 		s = struct('result',[tBSeuCallUII;rBSeuCallUII]);
-        	disp(s);
+    	disp(s);
 	end
 
 	if problem_name == '1_b_2'
@@ -140,17 +136,16 @@ function choose(problem_name, method, S, K, T, r, sig)
 		rootpath=pwd
 		cd(rootpath)
 		display('Problem 1 b) II');
-		rootpath=pwd;
 		U=[3.000000000000682 2.000000000010786   1.000000000010715];
 		filepathsBSamPutUII=getfilenames('./','BSamPutUII_*.m');
 		par={S,K,T,r,sig};
 		[timeBSamPutUII,relerrBSamPutUII] = executor(rootpath,filepathsBSamPutUII,U,par)
 
-		tBSamPutUII=NaN(numel(Methods),1); rBSamPutUII=NaN(numel(Methods),1);
-		for ii=1:numel(Methods)
+		tBSamPutUII=NaN(numel(method_name),1); rBSamPutUII=NaN(numel(method_name),1);
+		for ii=1:numel(method_name)
 		    for jj=1:numel(filepathsBSamPutUII)
-			a=filepathsBSamPutUII{jj}(3:3+numel(Methods{ii}));
-			b=[Methods{ii},'/'];
+			a=filepathsBSamPutUII{jj}(3:3+numel(method_name{ii}));
+			b=[method_name{ii},'/'];
 			if strcmp(a,b)
 			    tBSamPutUII(ii)=timeBSamPutUII(jj);
 			    rBSamPutUII(ii)=relerrBSamPutUII(jj);
@@ -158,7 +153,7 @@ function choose(problem_name, method, S, K, T, r, sig)
 		    end
 		end
 		s = struct('result',[tBSamPutUII;rBSamPutUII]);
-	        disp(s);
+        disp(s);
 	end
 
 	if problem_name == '1_c_2'
@@ -167,18 +162,17 @@ function choose(problem_name, method, S, K, T, r, sig)
 		rootpath=pwd
 		cd(rootpath)
 		display('Problem 1 c) II');
-		rootpath=pwd;
 		U=[0.033913177006134   0.512978189232598   1.469203342553328];
 		B = 1.25*K;
 		filepathsBSupoutCallII=getfilenames('./','BSupoutCallII_*.m');
 		par={S,K,T,r,sig,B};
 		[timeBSupoutCallII,relerrBSupoutCallII] = executor(rootpath,filepathsBSupoutCallII,U,par)
 
-		tBSupoutCallII=NaN(numel(Methods),1); rBSupoutCallII=NaN(numel(Methods),1);
-		for ii=1:numel(Methods)
+		tBSupoutCallII=NaN(numel(method_name),1); rBSupoutCallII=NaN(numel(method_name),1);
+		for ii=1:numel(method_name)
 		    for jj=1:numel(filepathsBSupoutCallII)
-			a=filepathsBSupoutCallII{jj}(3:3+numel(Methods{ii}));
-			b=[Methods{ii},'/'];
+			a=filepathsBSupoutCallII{jj}(3:3+numel(method_name{ii}));
+			b=[method_name{ii},'/'];
 			if strcmp(a,b)
 			    tBSupoutCallII(ii)=timeBSupoutCallII(jj);
 			    rBSupoutCallII(ii)=relerrBSupoutCallII(jj);
