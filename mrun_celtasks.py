@@ -1,7 +1,7 @@
 from celery import Celery
 import pyoctave_connector as poc
 
-app = Celery('taskrunner',backend='rpc://',broker='pyamqp://group8_user:notthatsecretpassword@192.168.29.153:5672/g8vhost')
+app = Celery('taskrunner',backend='rpc://',broker='pyamqp://group8_user:notthatsecretpassword@130.238.29.153:5672/g8vhost')
 
 @app.task
 def placeholder():
@@ -9,4 +9,4 @@ def placeholder():
 
 @app.task
 def run_problem_method(p,m):
-    return 
+    return poc.call_octave("choose",[p,m])
