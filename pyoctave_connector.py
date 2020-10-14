@@ -1,7 +1,8 @@
 import os, sys
 
 def call_octave(funcname,args):
-    command = funcname+"(\""+"\",\"".join(args)+"\")"
+    command = funcname+"("+",".join(args)+")"
+    print(command)
     result = os.popen("octave -q --eval \'"+command+"\'").read()
     results = result.split('result =\n\n',1)[1]
     time_result = results.strip().split('\n')[0]
@@ -10,4 +11,4 @@ def call_octave(funcname,args):
 
 
 if(__name__ == '__main__'):
-    print(call_octave("choose",sys.argv[1:]))
+    print(call_octave("choose1a",sys.argv[1:]))
