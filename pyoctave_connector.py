@@ -1,13 +1,12 @@
-import os
-import sys
-
-#command = "roundtrip1(\""+sys.argv[1]+"\")"
-
-#print(os.popen("octave -q --eval \'"+command+"\'").read())
+import os, sys
 
 def call_octave(funcname,args):
     command = funcname+"(\""+"\",\"".join(args)+"\")"
-    return os.popen("octave -q --eval \'"+command+"\'").read()
+	result = os.popen("octave -q --eval \'"+command+"\'").read()
+	results = result.split('result =\n\n',1)[1]
+	time_result = results.strip().split('\n')[0]
+	error_result = results.strip().split('\n')[1].strip() 
+	print('Computation time is {}, Error is {}'.format(time_result, error_result))
 
 
 if(__name__ == '__main__'):
