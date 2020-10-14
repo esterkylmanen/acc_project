@@ -4,12 +4,14 @@ import os
 
 app = Flask(__name__)
 
+methods = 
+
 @app.route('/processall', methods=['GET'])
 def TODO():
     return 0
 
-@app.route('/process/<method>/<situation>', methods=['GET'])
-def TODO(method,situation):
+@app.route('/process/<problem>/<method>/', methods=['GET'])
+def TODO(problem,method):
     return 0
 
 if __name__ == '__main__':
