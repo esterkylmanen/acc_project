@@ -41,6 +41,8 @@ else:
 print("Path at terminal when executing this file")
 print(os.getcwd() + "\n")
 cfg_file_path =  os.getcwd()+'/contex_script.txt'
+if(len(sys.argv) > 2):
+    cfg_file_path = os.getcwd()+'/'+sys.argv[2]
 if os.path.isfile(cfg_file_path):
     userdata = open(cfg_file_path)
 else:
