@@ -7,19 +7,19 @@ packages:
  - python-dev
  - python3-pip
  - python3-dev
+ - rabbitmq-server
  - python-flower
  - build-essential
  - git
  - octave
- - rabbitmq-server
  - screen
 byobu_default: system
 
 runcmd:
  - pip3 install flask
- - pip3 install celery
+ - pip3 install celery==4.4.7
  - pip3 install matplotlib
- - pip3 install flower
+ - pip install flower
  - sudo rabbitmq-plugins enable rabbitmq_management
  - sudo service rabbitmq-server restart
  - git clone https://github.com/esterkylmanen/acc_project /home/ubuntu/acc_project
