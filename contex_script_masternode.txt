@@ -7,6 +7,7 @@ packages:
  - python-dev
  - python3-pip
  - python3-dev
+ - python-flower
  - build-essential
  - git
  - octave
@@ -19,6 +20,8 @@ runcmd:
  - pip3 install celery
  - pip3 install matplotlib
  - pip3 install flower
+ - sudo rabbitmq-plugins enable rabbitmq_management
+ - sudo service rabbitmq-server restart
  - git clone https://github.com/esterkylmanen/acc_project /home/ubuntu/acc_project
  - sudo rabbitmqctl add_user group8_user notthatsecretpassword
  - sudo rabbitmqctl add_vhost g8vhost
