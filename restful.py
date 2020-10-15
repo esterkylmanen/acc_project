@@ -63,8 +63,7 @@ def progcheckspecific(identifier):
         return "ERROR: Invalid job number."
     relevant_job = global_jobs[ident]
     status_set = [task[1]+"-"+task[2]+": "+task[0].state for task in relevant_job]
-    done_set = [x for x in relevant_job if x[0] == 'SUCCESS']
-    return str(len(done_set)/len(status_set))+"% of job done. Subjob statuses: "+", ".join(status_set)+".\n"
+    return ", ".join(status_set)+".\n"
 
 @app.route('/getresult/<identifier>', methods=['GET'])
 def get_result(identifier):
