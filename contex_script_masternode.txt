@@ -21,7 +21,7 @@ runcmd:
  - git clone https://github.com/esterkylmanen/acc_project /home/ubuntu/acc_project
  - sudo rabbitmqctl add_user group8_user notthatsecretpassword
  - sudo rabbitmqctl add_vhost g8vhost
- - sudo rabbitmqctl set_user_tags group8_user mytag
+ - sudo rabbitmqctl set_user_tags group8_user administrator
  - sudo rabbitmqctl set_permissions -p g8vhost group8_user ".*" ".*" ".*"
  - cd /home/ubuntu/acc_project
  - sudo -u ubuntu screen -dmS celeryscreen celery -A mrun_celtasks worker --loglevel=INFO
