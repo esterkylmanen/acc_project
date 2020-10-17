@@ -2,7 +2,6 @@ from flask import Flask, jsonify, request
 import sys
 import os
 from mrun_celtasks import run_scenario
-#import pyoctave_connector as poc
 
 app = Flask(__name__)
 
@@ -16,6 +15,7 @@ problems = ['1_a_1', '1_b_1', '1_c_1', '1_a_2', '1_b_2', '1_c_2']
 
 global_next_id = 0
 global_jobs = []
+autoscaler_started = False
 
 @app.route('/process/<problem>/<method>/<S>/<K>/<T>/<r>/<sig>', methods=['GET'])
 def pmthd(problem,method,S,K,T,r,sig):
@@ -74,6 +74,16 @@ def get_result(identifier):
         results = task[0].get(timeout=999)
         s.append("Results for method "+ task[1]+" in problem "+ task[2]+": Time: "+results[0]+", Error: "+results[1]+".\n")
     return "".join(s)
+
+#Admin-called method
+@app.route('/start_autoscale/<user>/<password>', methods=['GET'])
+def start_autoscale(user,password):
+    global autoscaler_started
+    if(not autoscaler_started):
+        #todo
+        return "Autoscaler started."
+    else:
+        return "Autoscaler is already running."
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
