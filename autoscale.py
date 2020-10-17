@@ -1,6 +1,7 @@
 # http://docs.openstack.org/developer/python-novaclient/ref/v2/servers.html
 import time, os, sys
 import inspect
+import math
 from os import environ as env
 
 from  novaclient import client
@@ -48,11 +49,11 @@ def create_new_worker(worker_num,user,pswd):
 
     print("Creating worker "+str(worker_num))
     instance = nova.servers.create(name="group8_autoscale_worker"+str(worker_num), image=image, flavor=flavor, userdata=userdata, nics=nics,security_groups=secgroups,key_name="group8_keypair")
-    return instance
+    return [instance,"group8_autoscale_worker"+str(worker_num)]
 
 
-def delete_instance(instance_name):
-    server_object = nova.servers.list(search_opts={'name':instance_name})[0]
+def delete_instance(instance):
+    server_object = instance#nova.servers.list(search_opts={'name':instance_name})[0]
     server_object.delete()
 
 
@@ -66,3 +67,38 @@ def check_worker_status(worker_name):
         return "Idle"
     else:
         return "Active"
+
+def get_work_amount():
+    result = os.popen("curl https://130.238.29.153:5000/getnumactivetasks").read()
+    return int(result)
+
+user = sys.argv[1]
+password = sys.argv[2]
+worker_set = []
+work_ratio = 10
+while(True):
+    #masternode = app.control.inspect(['celery@g8-masternode'])
+    #masternode_work = masternode.active()+masternode.scheduled()+masternode.reserved()
+    work_count = get_work_amount()
+    if(work_count > (len(worker_set)+1)*work_ratio):
+        #Potential scale up.
+        leftovers = work_count - (len(worker_set)+1)*work_ratio
+        for i in range(math.floor(leftovers/10)):
+            worker_set.append(create_new_worker(len(worker_set),user,password))
+    elif(work_count == 0):
+        #Potential scale down.
+        for worker in worker_set:
+            delete_instance(worker[0])
+        worker_set = []
+    #elif(len(masternode_work) == 0 and len(worker_set) > 0):
+        #work_exists = False
+        #for worker in worker_set:
+        #    if(check_worker_status(worker[1]) == "Active"):
+        #        work_exists = True
+        #        break
+        #if(not work_exists):
+        #    for worker in worker_set:
+        #        delete_instance(worker[0])
+        #    worker_set = []
+    #Check once every thirty seconds for autoscaling needs.
+    time.sleep(30)

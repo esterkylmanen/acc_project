@@ -15,7 +15,7 @@ problems = ['1_a_1', '1_b_1', '1_c_1', '1_a_2', '1_b_2', '1_c_2']
 
 global_next_id = 0
 global_jobs = []
-autoscaler_started = False
+global_autoscaler = None
 
 @app.route('/process/<problem>/<method>/<S>/<K>/<T>/<r>/<sig>', methods=['GET'])
 def pmthd(problem,method,S,K,T,r,sig):
@@ -55,6 +55,17 @@ def progcheckglobal():
         status_sets.append("Job "+str(relevant_job_num)+": "+", ".join([task[0].state for task in global_jobs[relevant_job_num]])+".\n")
     return "".join(status_sets)
 
+@app.route('/getnumactivetasks', methods=['GET'])
+def progactivecount():
+    count = 0
+    global global_jobs
+    for relevant_job in global_jobs:
+        for task in relevant_job:
+            if task[0].state == "STARTED" or task[0].state == "PENDING" or task[0].state == "RECEIVED":
+                count += 1
+        #status_sets.append("Job "+str(relevant_job_num)+": "+", ".join([task[0].state for task in global_jobs[relevant_job_num]])+".\n")
+    return str(count)
+
 @app.route('/checkprogress/<identifier>', methods=['GET'])
 def progcheckspecific(identifier):
     ident = int(identifier)
@@ -75,12 +86,14 @@ def get_result(identifier):
         s.append("Results for method "+ task[1]+" in problem "+ task[2]+": Time: "+results[0]+", Error: "+results[1]+".\n")
     return "".join(s)
 
-#Admin-called method
+#Admin-called method.
+#Run this when the cluster master node has been initialised.
+#Prevents the password and user from being stored on the github.
 @app.route('/start_autoscale/<user>/<password>', methods=['GET'])
 def start_autoscale(user,password):
-    global autoscaler_started
-    if(not autoscaler_started):
-        #todo
+    global global_autoscaler
+    if(global_autoscaler == None):
+        global_autoscaler = os.popen("sudo-u ubuntu screen python3 autoscale.py "+user+" "+password)
         return "Autoscaler started."
     else:
         return "Autoscaler is already running."
