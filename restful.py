@@ -64,7 +64,7 @@ def progactivecount():
             if task[0].state == "STARTED" or task[0].state == "PENDING" or task[0].state == "RECEIVED":
                 count += 1
         #status_sets.append("Job "+str(relevant_job_num)+": "+", ".join([task[0].state for task in global_jobs[relevant_job_num]])+".\n")
-    return str(count)
+    return "num_active_tasks:"+str(count)
 
 @app.route('/checkprogress/<identifier>', methods=['GET'])
 def progcheckspecific(identifier):

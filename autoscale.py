@@ -69,8 +69,8 @@ def check_worker_status(worker_name):
         return "Active"
 
 def get_work_amount():
-    result = os.popen("curl https://130.238.29.153:5000/getnumactivetasks").read()
-    return int(result)
+    result = os.popen("curl http://130.238.29.153:5000/getnumactivetasks").read()
+    return int(result.split("num_active_tasks:")[1])
 
 user = sys.argv[1]
 password = sys.argv[2]
