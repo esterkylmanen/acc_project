@@ -12,6 +12,9 @@ flavor = "ssc.xsmall" #"ACCHT18.normal"
 private_net = "UPPMAX 2020/1-2 Internal IPv4 Network" #My addition
 floating_ip_pool_name = None
 floating_ip = None
+if(len(sys.argv) > 2):
+    if(sys.argv[2] == "contex_script_masternode.txt"):
+        floating_ip="130.238.29.153"
 image_name = "Ubuntu 18.04"
 
 loader = loading.get_plugin_loader('password')
