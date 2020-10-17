@@ -79,7 +79,7 @@ work_ratio = int(sys.argv[3])
 worker_cap = int(sys.argv[4]) #This way we don't overload the cloud with workers.
 while(True):
     work_count = get_work_amount()
-    if(work_count > (len(worker_set)+1)*work_ratio and worker_cap < len(worker_set)):
+    if(work_count > (len(worker_set)+1)*work_ratio and worker_cap > len(worker_set)):
         #Potential scale up.
         leftovers = work_count - (len(worker_set)+1)*work_ratio
         for i in range(math.floor(leftovers/10)):
