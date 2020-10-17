@@ -93,7 +93,7 @@ def get_result(identifier):
 def start_autoscale(user,password):
     global global_autoscaler
     if(global_autoscaler == None):
-        global_autoscaler = os.popen("sudo -u ubuntu screen python3 autoscale.py "+user+" "+password)
+        global_autoscaler = os.popen("sudo -u ubuntu screen python3 autoscale.py "+user+" "+password+" 8 5")#hardcoded numbers for now.
         return "Autoscaler started.\n"
     else:
         return "Autoscaler is already running.\n"

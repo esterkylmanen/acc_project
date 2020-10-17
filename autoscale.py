@@ -75,30 +75,21 @@ def get_work_amount():
 user = sys.argv[1]
 password = sys.argv[2]
 worker_set = []
-work_ratio = 10
+work_ratio = int(sys.argv[3])
+worker_cap = int(sys.argv[4]) #This way we don't overload the cloud with workers.
 while(True):
-    #masternode = app.control.inspect(['celery@g8-masternode'])
-    #masternode_work = masternode.active()+masternode.scheduled()+masternode.reserved()
     work_count = get_work_amount()
-    if(work_count > (len(worker_set)+1)*work_ratio):
+    if(work_count > (len(worker_set)+1)*work_ratio and worker_cap < len(worker_set)):
         #Potential scale up.
         leftovers = work_count - (len(worker_set)+1)*work_ratio
         for i in range(math.floor(leftovers/10)):
+            if(len(worker_set) == worker_cap):
+                break
             worker_set.append(create_new_worker(len(worker_set),user,password))
     elif(work_count == 0):
         #Potential scale down.
         for worker in worker_set:
             delete_instance(worker[0])
         worker_set = []
-    #elif(len(masternode_work) == 0 and len(worker_set) > 0):
-        #work_exists = False
-        #for worker in worker_set:
-        #    if(check_worker_status(worker[1]) == "Active"):
-        #        work_exists = True
-        #        break
-        #if(not work_exists):
-        #    for worker in worker_set:
-        #        delete_instance(worker[0])
-        #    worker_set = []
     #Check once every thirty seconds for autoscaling needs.
     time.sleep(30)
