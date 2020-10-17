@@ -7,6 +7,8 @@ from  novaclient import client
 import keystoneclient.v3.client as ksclient
 from keystoneauth1 import loading
 from keystoneauth1 import session
+from mrun_celtasks import app
+
 
 def create_new_worker(worker_num,user,pswd):
     flavor = "ssc.xsmall" #"ACCHT18.normal" 
@@ -47,3 +49,20 @@ def create_new_worker(worker_num,user,pswd):
     print("Creating worker "+str(worker_num))
     instance = nova.servers.create(name="group8_autoscale_worker"+str(worker_num), image=image, flavor=flavor, userdata=userdata, nics=nics,security_groups=secgroups,key_name="group8_keypair")
     return instance
+
+
+def delete_instance(instance_name):
+    server_object = nova.servers.list(search_opts={'name':instance_name})[0]
+    server_object.delete()
+
+
+def check_worker_status(worker_name):
+    i = app.control.inspect([worker_name])
+    # check if there are no active, scheduled or reserved tasks
+    active_tasks = i.active()
+    scheduled_tasks = i.scheduled()
+    reserved_tasks = i.reserved()
+    if (len(active_tasks[worker_name]) == 0) & (len(scheduled_tasks[worker_name]) == 0) & (len(reserved_tasks[worker_name]) == 0):
+        return "Idle"
+    else:
+        return "Active"
