@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 import sys
 import os, datetime
 from mrun_celtasks import run_scenario
+from dateutil.parser import parse
 
 app = Flask(__name__)
 
@@ -90,8 +91,8 @@ def get_result(identifier):
     for task in taskset:
         results = task[0].get(timeout=999)
         s.append("Results for method "+ task[1]+" in problem "+ task[2]+": Time: "+results[0]+", Error: "+results[1]+".\n")
-        if results[2] > end_time:
-            end_time=results[2]
+        if parse(results[2]) > end_time:
+            end_time=parse(results[2])
     total_time = end_time - start_time
     s.append("Total computation time is: "+ str(total_time)+".\n")    
     return "".join(s)
