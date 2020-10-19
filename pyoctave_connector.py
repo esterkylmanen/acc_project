@@ -1,7 +1,7 @@
 import os, sys, datetime
 
 def call_octave(funcname,args):
-	args = list(map(str, args))
+    args = list(map(str, args))
     command = funcname+"("+",".join(args)+")"
     print(command)
     result = os.popen("octave -q --eval \'"+command+"\'").read()
