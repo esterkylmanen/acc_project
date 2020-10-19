@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 import sys
-import os
+import os, datetime
 from mrun_celtasks import run_scenario
 
 app = Flask(__name__)
@@ -16,6 +16,7 @@ problems = ['1_a_1', '1_b_1', '1_c_1', '1_a_2', '1_b_2', '1_c_2']
 global_next_id = 0
 global_jobs = []
 global_autoscaler = None
+global_job_time = []
 
 @app.route('/process/<problem>/<method>/<S>/<K>/<T>/<r>/<sig>', methods=['GET'])
 def pmthd(problem,method,S,K,T,r,sig):
@@ -43,8 +44,10 @@ def pmthd(problem,method,S,K,T,r,sig):
     #result = poc.call_octave("choose",arguments)
     global global_jobs
     global global_next_id
+    global global_job_time
     global_jobs.append(result_set)
     global_next_id = global_next_id + 1
+    global_job_time.append(datetime.datetime.now())
     return "The job has been started. Your job ID: "+str(global_next_id-1)+".\n" #TODO
 
 @app.route('/checkprogress', methods=['GET'])
@@ -79,11 +82,18 @@ def progcheckspecific(identifier):
 @app.route('/getresult/<identifier>', methods=['GET'])
 def get_result(identifier):
     global global_jobs
+    global global_job_time
     taskset = global_jobs[int(identifier)]
     s = []
+    start_time = global_job_time[int(identifier)]
+    end_time = start_time
     for task in taskset:
         results = task[0].get(timeout=999)
         s.append("Results for method "+ task[1]+" in problem "+ task[2]+": Time: "+results[0]+", Error: "+results[1]+".\n")
+        if results[2] > end_time:
+            end_time=results[2]
+    total_time = end_time - start_time
+    s.append("Total computation time is: "+ str(total_time)+".\n")    
     return "".join(s)
 
 #Admin-called method.
