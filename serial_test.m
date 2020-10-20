@@ -1,9 +1,8 @@
 
-function serial_test()
+function serial_test(method)
 
     format long
-    Methods={'FFT','FGL','COS',...
-        'FD','FD-NU','FD-AD'};
+    method_name={method};
 
     %% Problem 1 a) I
 
@@ -16,11 +15,11 @@ function serial_test()
     par={S,K,T,r,sig};
     [timeBSeuCallUI,relerrBSeuCallUI] = executor(rootpath,filepathsBSeuCallUI,U,par)
 
-    tBSeuCallUI=NaN(numel(Methods),1); rBSeuCallUI=tBSeuCallUI;
-    for ii=1:numel(Methods)
+    tBSeuCallUI=NaN(numel(method_name),1); rBSeuCallUI=tBSeuCallUI;
+    for ii=1:numel(method_name)
         for jj=1:numel(filepathsBSeuCallUI)
-            a=filepathsBSeuCallUI{jj}(3:3+numel(Methods{ii}));
-            b=[Methods{ii},'/'];
+            a=filepathsBSeuCallUI{jj}(3:3+numel(method_name{ii}));
+            b=[method_name{ii},'/'];
             if strcmp(a,b)
                 tBSeuCallUI(ii)=timeBSeuCallUI(jj);
                 rBSeuCallUI(ii)=relerrBSeuCallUI(jj);
@@ -41,11 +40,11 @@ function serial_test()
     par={S,K,T,r,sig};
     [timeBSamPutUI,relerrBSamPutUI] = executor(rootpath,filepathsBSamPutUI,U,par)
 
-    tBSamPutUI=NaN(numel(Methods),1); rBSamPutUI=NaN(numel(Methods),1);
-    for ii=1:numel(Methods)
+    tBSamPutUI=NaN(numel(method_name),1); rBSamPutUI=NaN(numel(method_name),1);
+    for ii=1:numel(method_name)
         for jj=1:numel(filepathsBSamPutUI)
-            a=filepathsBSamPutUI{jj}(3:3+numel(Methods{ii}));
-            b=[Methods{ii},'/'];
+            a=filepathsBSamPutUI{jj}(3:3+numel(method_name{ii}));
+            b=[method_name{ii},'/'];
             if strcmp(a,b)
                 tBSamPutUI(ii)=timeBSamPutUI(jj);
                 rBSamPutUI(ii)=relerrBSamPutUI(jj);
@@ -66,11 +65,11 @@ function serial_test()
     par={S,K,T,r,sig,B};
     [timeBSupoutCallI,relerrBSupoutCallI] = executor(rootpath,filepathsBSupoutCallI,U,par)
 
-    tBSupoutCallI=NaN(numel(Methods),1); rBSupoutCallI=NaN(numel(Methods),1);
-    for ii=1:numel(Methods)
+    tBSupoutCallI=NaN(numel(method_name),1); rBSupoutCallI=NaN(numel(method_name),1);
+    for ii=1:numel(method_name)
         for jj=1:numel(filepathsBSupoutCallI)
-            a=filepathsBSupoutCallI{jj}(3:3+numel(Methods{ii}));
-            b=[Methods{ii},'/'];
+            a=filepathsBSupoutCallI{jj}(3:3+numel(method_name{ii}));
+            b=[method_name{ii},'/'];
             if strcmp(a,b)
                 tBSupoutCallI(ii)=timeBSupoutCallI(jj);
                 rBSupoutCallI(ii)=relerrBSupoutCallI(jj);
@@ -91,11 +90,11 @@ function serial_test()
     par={S,K,T,r,sig};
     [timeBSamPutUII,relerrBSamPutUII] = executor(rootpath,filepathsBSamPutUII,U,par)
 
-    tBSamPutUII=NaN(numel(Methods),1); rBSamPutUII=NaN(numel(Methods),1);
-    for ii=1:numel(Methods)
+    tBSamPutUII=NaN(numel(method_name),1); rBSamPutUII=NaN(numel(method_name),1);
+    for ii=1:numel(method_name)
         for jj=1:numel(filepathsBSamPutUII)
-            a=filepathsBSamPutUII{jj}(3:3+numel(Methods{ii}));
-            b=[Methods{ii},'/'];
+            a=filepathsBSamPutUII{jj}(3:3+numel(method_name{ii}));
+            b=[method_name{ii},'/'];
             if strcmp(a,b)
                 tBSamPutUII(ii)=timeBSamPutUII(jj);
                 rBSamPutUII(ii)=relerrBSamPutUII(jj);

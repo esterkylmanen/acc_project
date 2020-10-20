@@ -1,9 +1,12 @@
 import os, sys, datetime
 
 def call_octave(funcname):
+    methods = ['FFT','FGL','COS', 'FD','FD-NU','FD-AD']
     start_time = datetime.datetime.now()
-    command = funcname+"()"
-    result = os.popen("octave -q --eval \'"+command+"\'").read()
+    for method in methods:
+        command = funcname+"('"+ method +"')"
+        print(command)
+        result = os.popen("octave -q --eval \'"+command+"\'").read()
     end_time = datetime.datetime.now()
     print("Time taken {}".format(end_time - start_time))
 
