@@ -9,4 +9,4 @@ def call_octave(funcname):
 
 
 if(__name__ == '__main__'):
-    print(call_octave("Table_test"))
+    print(call_octave("serial_test"))
